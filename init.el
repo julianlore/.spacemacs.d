@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     python
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -41,15 +42,16 @@ values."
      ;; better-defaults
      emacs-lisp
      latex
-     ;; git
-     ;; markdown
-     ;; org
+     git
+     markdown
+     org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
-     ;; spell-checking
-     ;; syntax-checking
-     ;; version-control
+     spell-checking
+     syntax-checking
+     version-control
+     auto-completion
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -301,6 +303,8 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (global-set-key (kbd "TAB") 'hippie-expand)
+  (global-set-key (kbd "<tab>") 'hippie-expand)
   )
 
 (defun dotspacemacs/user-config ()
@@ -332,12 +336,13 @@ you should place your code here."
      (output-html "xdg-open"))))
  '(cdlatex-paired-parens "$[{(")
  '(doc-view-continuous t)
+ '(evil-want-Y-yank-to-eol nil)
  '(inhibit-startup-screen t)
  '(initial-buffer-choice nil)
  '(org-latex-remove-logfiles t)
  '(package-selected-packages
    (quote
-    (auctex-latexmk auctex ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu goto-chg eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async zoom-frm spacemacs-whitespace-cleanup spaceline-config info+ image-mode hide-comnt help-fns+ helm-spacemacs-help helm-spacemacs-faq dired-x hybrid-mode holy-mode evil-evilified-state flyspell-popup rainbow-delimiters company solarized-theme yasnippet aggressive-indent haskell-mode go-mode smooth-scrolling imenu-list doom-modeline rainbow-mode sublimity smex indent-guide focus evil undo-tree auto-package-update use-package))))
+    (yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic helm-company helm-c-yasnippet fuzzy company-statistics company-auctex auto-yasnippet ac-ispell auto-complete smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit transient git-commit with-editor diff-hl auto-dictionary auctex-latexmk auctex ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu goto-chg eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async zoom-frm spacemacs-whitespace-cleanup spaceline-config info+ image-mode hide-comnt help-fns+ helm-spacemacs-help helm-spacemacs-faq dired-x hybrid-mode holy-mode evil-evilified-state flyspell-popup rainbow-delimiters company solarized-theme yasnippet aggressive-indent haskell-mode go-mode smooth-scrolling imenu-list doom-modeline rainbow-mode sublimity smex indent-guide focus evil undo-tree auto-package-update use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
