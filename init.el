@@ -57,7 +57,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(beacon)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -303,8 +303,8 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  (global-set-key (kbd "TAB") 'hippie-expand)
-  (global-set-key (kbd "<tab>") 'hippie-expand)
+  ;; (global-set-key (kbd "TAB") 'hippie-expand)
+  ;; (global-set-key (kbd "<tab>") 'hippie-expand)
   )
 
 (defun dotspacemacs/user-config ()
@@ -314,6 +314,41 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (global-undo-tree-mode)
+  (setq undo-tree-auto-save-history t)
+  (setq evil-want-fine-undo t)
+  (global-evil-search-highlight-persist nil)
+  (global-aggressive-indent-mode 1)
+  (add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
+  ;; Make linum-mode a global minor under the name global-linum-mode
+  (define-globalized-minor-mode global-linum-mode linum-mode
+    (lambda () (linum-mode 1)))
+  (global-linum-mode 1)
+  (global-visual-line-mode t) ;; To wrap lines like on other text editors like Notepad
+  (global-set-key [3 67108911] (quote comment-line))
+  (setq-default c-basic-offset 4 c-default-style "linux")
+  ;; Disable tab indentation, use spaces
+  (setq-default indent-tabs-mode nil)
+  ;; Tab size to be 4 spaces
+  (setq tab-stop-list (number-sequence 4 200 4))
+  (setq tab-width 4)
+
+  (when (fboundp 'windmove-default-keybindings)
+    (windmove-default-keybindings 'meta))
+
+  ;; Add auto-fill to text-mode by default
+  (add-hook 'text-mode-hook 'auto-fill-mode)
+
+  ;; Delete whitespace on save
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+  ;; Set yes-or-no to always be y-or-n
+  (fset 'yes-or-no-p 'y-or-n-p)
+
+  ;; Always follow symlinks
+  (setq vc-follow-symlinks t)
+
+  (beacon-mode 1)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -324,7 +359,7 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(TeX-source-correlate-mode t)
- '(TeX-source-correlate-start-server t)
+ '(TeX-source-correlate-start-server t t)
  '(TeX-view-program-selection
    (quote
     (((output-dvi has-no-display-manager)
@@ -342,7 +377,7 @@ you should place your code here."
  '(org-latex-remove-logfiles t)
  '(package-selected-packages
    (quote
-    (yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic helm-company helm-c-yasnippet fuzzy company-statistics company-auctex auto-yasnippet ac-ispell auto-complete smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit transient git-commit with-editor diff-hl auto-dictionary auctex-latexmk auctex ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu goto-chg eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async zoom-frm spacemacs-whitespace-cleanup spaceline-config info+ image-mode hide-comnt help-fns+ helm-spacemacs-help helm-spacemacs-faq dired-x hybrid-mode holy-mode evil-evilified-state flyspell-popup rainbow-delimiters company solarized-theme yasnippet aggressive-indent haskell-mode go-mode smooth-scrolling imenu-list doom-modeline rainbow-mode sublimity smex indent-guide focus evil undo-tree auto-package-update use-package))))
+    (beacon yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic helm-company helm-c-yasnippet fuzzy company-statistics company-auctex auto-yasnippet ac-ispell auto-complete smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit transient git-commit with-editor diff-hl auto-dictionary auctex-latexmk auctex ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu goto-chg eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async zoom-frm spacemacs-whitespace-cleanup spaceline-config info+ image-mode hide-comnt help-fns+ helm-spacemacs-help helm-spacemacs-faq dired-x hybrid-mode holy-mode evil-evilified-state flyspell-popup rainbow-delimiters company solarized-theme yasnippet aggressive-indent haskell-mode go-mode smooth-scrolling imenu-list doom-modeline rainbow-mode sublimity smex indent-guide focus evil undo-tree auto-package-update use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
