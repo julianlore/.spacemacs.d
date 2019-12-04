@@ -319,13 +319,14 @@ you should place your code here."
   (setq evil-want-fine-undo t)
   (global-evil-search-highlight-persist nil)
   (global-aggressive-indent-mode 1)
-  (add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
+  ;; (add-hook 'flyspell-mode-hook #'flyspell-popup-auto-correct-mode)
   ;; Make linum-mode a global minor under the name global-linum-mode
   (define-globalized-minor-mode global-linum-mode linum-mode
     (lambda () (linum-mode 1)))
   (global-linum-mode 1)
   (global-visual-line-mode t) ;; To wrap lines like on other text editors like Notepad
   (global-set-key [3 67108911] (quote comment-line))
+  (global-set-key (kbd "C-c C-SPC") (quote comment-line))
   (setq-default c-basic-offset 4 c-default-style "linux")
   ;; Disable tab indentation, use spaces
   (setq-default indent-tabs-mode nil)
@@ -347,6 +348,9 @@ you should place your code here."
 
   ;; Always follow symlinks
   (setq vc-follow-symlinks t)
+
+  (electric-pair-mode 1)
+  (show-paren-mode 1)
 
   (beacon-mode 1)
   )
